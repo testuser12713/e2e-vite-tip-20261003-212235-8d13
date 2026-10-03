@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trinkgeld-Rechner – Leer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <!-- Mockup-only state switcher (reviewer navigation; not part of the product UI). -->
+    <nav class="state-nav" aria-label="Mockup-Zustände">
+      <span class="state-nav__label">Zustand</span>
+      <a class="state-nav__link is-active" href="index.html" aria-current="page">Leer</a>
+      <a class="state-nav__link" href="ergebnis.html">Ergebnis</a>
+      <a class="state-nav__link" href="fehler.html">Fehler</a>
+    </nav>
+
+    <main class="card" data-od-id="tip-calculator-card">
+      <h1 class="card__title" data-od-id="title">Trinkgeld-Rechner</h1>
+      <p class="card__subtitle">Betrag eingeben – Ergebnis erscheint sofort.</p>
+
+      <form class="form" id="tip-form" novalidate>
+        <div class="field is-invalid" data-od-id="amount-field">
+          <label class="field__label" for="amount">Betrag</label>
+          <div class="field__control">
+            <input class="field__input" type="text" inputmode="decimal" id="amount" name="amount"
+                   placeholder="0,00" autocomplete="off" aria-invalid="true"
+                   aria-describedby="amount-helper" />
+            <span class="field__suffix" aria-hidden="true">€</span>
+          </div>
+          <p class="field__helper" id="amount-helper">Bitte Betrag eingeben.</p>
+        </div>
+
+        <div class="field is-invalid" data-od-id="percent-field">
+          <label class="field__label" for="percent">Trinkgeld-Prozent</label>
+          <div class="field__control">
+            <input class="field__input" type="text" inputmode="decimal" id="percent" name="percent"
+                   placeholder="10" autocomplete="off" aria-invalid="true"
+                   aria-describedby="percent-helper" />
+            <span class="field__suffix" aria-hidden="true">%</span>
+          </div>
+          <p class="field__helper" id="percent-helper">Bitte Trinkgeld-Prozent eingeben.</p>
+        </div>
+
+        <div class="field is-invalid" data-od-id="people-field">
+          <label class="field__label" for="people">Personenzahl</label>
+          <div class="field__control">
+            <input class="field__input" type="text" inputmode="numeric" id="people" name="people"
+                   placeholder="1" autocomplete="off" aria-invalid="true"
+                   aria-describedby="people-helper" />
+            <span class="field__suffix" aria-hidden="true">Pers.</span>
+          </div>
+          <p class="field__helper" id="people-helper">Bitte Personenzahl eingeben.</p>
+        </div>
+      </form>
+
+      <!-- Result slot: exactly one of result panel / error box is visible. -->
+      <section class="result" id="result-panel" aria-live="polite" data-od-id="result-panel" hidden>
+        <h2 class="result__header">Ergebnis</h2>
+        <div class="result__row">
+          <span class="result__label">Trinkgeld</span>
+          <span class="result__value" id="result-tip">€ 0,00</span>
+        </div>
+        <div class="result__row">
+          <span class="result__label">Betrag pro Person</span>
+          <span class="result__value" id="result-per-person">€ 0,00</span>
+        </div>
+        <div class="result__row result__row--total">
+          <span class="result__label">Gesamtbetrag</span>
+          <span class="result__value" id="result-total">€ 0,00</span>
+        </div>
+      </section>
+
+      <div class="error-box" id="error-box" role="alert" data-od-id="error-message">
+        <svg class="error-box__icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3.5 22 20H2L12 3.5Z" fill="#DC2626" />
+          <path d="M12 9.25v4.5" stroke="#FEF2F2" stroke-width="1.8" stroke-linecap="round" />
+          <circle cx="12" cy="16.5" r="1.1" fill="#FEF2F2" />
+        </svg>
+        <span id="error-box-text">Ungültige Eingabe – bitte korrigieren.</span>
+      </div>
+    </main>
+  </div>
+
+  <script src="calculator.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

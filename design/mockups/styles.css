@@ -1,0 +1,336 @@
+/* ==========================================================================
+   Trinkgeld-Rechner — shared stylesheet
+   Design tokens below are authoritative (see design system). Do not improvise.
+   ========================================================================== */
+
+:root {
+  --color-bg: #F6F7F9;
+  --color-surface: #FFFFFF;
+  --color-fg: #111827;
+  --color-fg-subtle: #4B5563;
+  --color-muted: #6B7280;
+  --color-border: #E5E7EB;
+  --color-border-strong: #D1D5DB;
+  --color-accent: #0F766E;
+  --color-accent-hover: #0D5F58;
+  --color-accent-active: #0A4A44;
+  --color-accent-ring: rgba(15,118,110,0.35);
+  --color-accent-soft: #ECFDF5;
+  --color-danger: #DC2626;
+  --color-danger-soft: #FEF2F2;
+  --color-danger-ring: rgba(220,38,38,0.3);
+  --color-success: #15803D;
+  --color-field-bg: #FFFFFF;
+  --color-field-bg-disabled: #F3F4F6;
+
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-numeric: 'Inter', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --space-0: 4px;
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Page shell: one column, horizontally centered, safe-area aware. */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 48px;
+  padding-bottom: 32px;
+  padding-left: calc(16px + env(safe-area-inset-left));
+  padding-right: calc(16px + env(safe-area-inset-right));
+}
+
+/* Mockup-only state switcher — reviewer navigation, NOT product UI. */
+.state-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.state-nav__label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-right: var(--space-0);
+}
+
+.state-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 4px 14px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-fg-subtle);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.state-nav__link:hover {
+  background: var(--color-field-bg-disabled);
+  color: var(--color-fg);
+}
+
+.state-nav__link.is-active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #FFFFFF;
+}
+
+/* Card / page container */
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+}
+
+.card__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-fg);
+}
+
+.card__subtitle {
+  margin: var(--space-1) 0 0;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+/* Form + fields */
+.form {
+  margin-top: var(--space-4);
+}
+
+.field {
+  margin-bottom: var(--space-3);
+}
+
+.field:last-of-type {
+  margin-bottom: 0;
+}
+
+.field__label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-fg-subtle);
+  margin-bottom: var(--space-1);
+}
+
+.field__control {
+  position: relative;
+}
+
+.field__input {
+  width: 100%;
+  height: 44px;
+  padding: 0 48px 0 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-field-bg);
+  color: var(--color-fg);
+  font-family: var(--font-numeric);
+  font-size: 16px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.field__input::placeholder {
+  color: var(--color-muted);
+}
+
+.field__input:focus,
+.field__input:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-ring);
+}
+
+.field__input:disabled {
+  background: var(--color-field-bg-disabled);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.field__suffix {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.field__helper {
+  margin: var(--space-1) 0 0;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+/* Invalid field state */
+.field.is-invalid .field__input {
+  border-color: var(--color-danger);
+  background: var(--color-danger-soft);
+}
+
+.field.is-invalid .field__input:focus,
+.field.is-invalid .field__input:focus-visible {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px var(--color-danger-ring);
+}
+
+.field.is-invalid .field__helper {
+  color: var(--color-danger);
+  font-weight: 500;
+}
+
+/* Error message (replaces result panel when any field is invalid) */
+.error-box {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  margin-top: var(--space-4);
+  background: var(--color-danger-soft);
+  border: 1px solid var(--color-danger-ring);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-danger);
+}
+
+.error-box__icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Result panel */
+.result {
+  margin-top: var(--space-4);
+}
+
+.result__header {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-fg);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.result__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.result__row + .result__row {
+  border-top: 1px dashed var(--color-border);
+}
+
+.result__label {
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.result__value {
+  font-family: var(--font-numeric);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-fg);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Emphasised total row */
+.result__row--total .result__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-fg-subtle);
+}
+
+.result__row--total .result__value {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* Single breakpoint at 640px */
+@media (max-width: 640px) {
+  .page {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .card {
+    padding: var(--space-4);
+  }
+
+  .card__title {
+    font-size: 20px;
+  }
+
+  .result__row--total .result__value {
+    font-size: 28px;
+  }
+}
