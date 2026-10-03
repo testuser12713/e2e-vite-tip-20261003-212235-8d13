@@ -38,7 +38,7 @@ export default function ResultPanel(
             style={{ fill: 'var(--color-danger-soft)' }}
           />
         </svg>
-        <span>{outcome.error}</span>
+        <span>{'Ungültige Eingabe – bitte korrigieren.'}</span>
       </div>
     )
   }
