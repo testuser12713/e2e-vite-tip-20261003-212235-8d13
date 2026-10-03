@@ -6,6 +6,65 @@ export interface TipFormProps {
   onFieldChange: (field: keyof TipInput, value: string) => void
 }
 
+interface FieldValidation {
+  invalid: boolean
+  message: string
+}
+
+function parseNumeric(raw: string): number | null {
+  const trimmed = raw.trim()
+  if (trimmed === '') {
+    return null
+  }
+  const value = Number(trimmed.replace(',', '.'))
+  return Number.isFinite(value) ? value : null
+}
+
+function validateAmount(raw: string): FieldValidation {
+  if (raw.trim() === '') {
+    return { invalid: true, message: 'Bitte Betrag eingeben.' }
+  }
+  const value = parseNumeric(raw)
+  if (value === null) {
+    return { invalid: true, message: 'Bitte einen gültigen Betrag eingeben.' }
+  }
+  if (value < 0) {
+    return { invalid: true, message: 'Betrag darf nicht negativ sein.' }
+  }
+  return { invalid: false, message: '' }
+}
+
+function validatePercent(raw: string): FieldValidation {
+  if (raw.trim() === '') {
+    return { invalid: true, message: 'Bitte Trinkgeld-Prozent eingeben.' }
+  }
+  const value = parseNumeric(raw)
+  if (value === null) {
+    return {
+      invalid: true,
+      message: 'Bitte einen gültigen Trinkgeld-Prozentsatz eingeben.',
+    }
+  }
+  if (value < 0) {
+    return { invalid: true, message: 'Trinkgeld-Prozent darf nicht negativ sein.' }
+  }
+  return { invalid: false, message: '' }
+}
+
+function validatePeople(raw: string): FieldValidation {
+  if (raw.trim() === '') {
+    return { invalid: true, message: 'Bitte Personenzahl eingeben.' }
+  }
+  const value = parseNumeric(raw)
+  if (value === null) {
+    return { invalid: true, message: 'Bitte eine gültige Personenzahl eingeben.' }
+  }
+  if (value < 1) {
+    return { invalid: true, message: 'Personenzahl muss mindestens 1 sein.' }
+  }
+  return { invalid: false, message: '' }
+}
+
 const formStyle: CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
@@ -36,6 +95,10 @@ export default function TipForm({
   input,
   onFieldChange,
 }: TipFormProps): JSX.Element {
+  const bill = validateAmount(input.bill)
+  const percent = validatePercent(input.percent)
+  const people = validatePeople(input.people)
+
   return (
     <form className="tip-form" style={formStyle} noValidate onSubmit={(event) => event.preventDefault()}>
       <div className="field">
@@ -53,15 +116,19 @@ export default function TipForm({
             value={input.bill}
             placeholder="0,00"
             autoComplete="off"
-            aria-describedby="bill-helper"
+            aria-invalid={bill.invalid}
+            aria-describedby={bill.invalid ? 'bill-error' : 'bill-helper'}
             onChange={(event) => onFieldChange('bill', event.target.value)}
           />
           <span className="field-suffix" style={suffixStyle} aria-hidden="true">
             €
           </span>
         </div>
-        <p className="field-helper" id="bill-helper">
-          Betrag in Euro
+        <p
+          className={bill.invalid ? 'field-helper field-error' : 'field-helper'}
+          id={bill.invalid ? 'bill-error' : 'bill-helper'}
+        >
+          {bill.invalid ? bill.message : 'Betrag in Euro'}
         </p>
       </div>
 
@@ -80,15 +147,19 @@ export default function TipForm({
             value={input.percent}
             placeholder="10"
             autoComplete="off"
-            aria-describedby="percent-helper"
+            aria-invalid={percent.invalid}
+            aria-describedby={percent.invalid ? 'percent-error' : 'percent-helper'}
             onChange={(event) => onFieldChange('percent', event.target.value)}
           />
           <span className="field-suffix" style={suffixStyle} aria-hidden="true">
             %
           </span>
         </div>
-        <p className="field-helper" id="percent-helper">
-          Trinkgeld in Prozent
+        <p
+          className={percent.invalid ? 'field-helper field-error' : 'field-helper'}
+          id={percent.invalid ? 'percent-error' : 'percent-helper'}
+        >
+          {percent.invalid ? percent.message : 'Trinkgeld in Prozent'}
         </p>
       </div>
 
@@ -107,15 +178,19 @@ export default function TipForm({
             value={input.people}
             placeholder="1"
             autoComplete="off"
-            aria-describedby="people-helper"
+            aria-invalid={people.invalid}
+            aria-describedby={people.invalid ? 'people-error' : 'people-helper'}
             onChange={(event) => onFieldChange('people', event.target.value)}
           />
           <span className="field-suffix" style={suffixStyle} aria-hidden="true">
             Pers.
           </span>
         </div>
-        <p className="field-helper" id="people-helper">
-          Anzahl der Personen
+        <p
+          className={people.invalid ? 'field-helper field-error' : 'field-helper'}
+          id={people.invalid ? 'people-error' : 'people-helper'}
+        >
+          {people.invalid ? people.message : 'Anzahl der Personen'}
         </p>
       </div>
     </form>

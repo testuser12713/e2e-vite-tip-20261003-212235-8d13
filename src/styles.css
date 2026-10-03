@@ -178,6 +178,11 @@ body {
   color: var(--color-muted);
 }
 
+.field-error {
+  font-weight: 500;
+  color: var(--color-danger);
+}
+
 /* ErrorMessage */
 .error-message {
   display: flex;
